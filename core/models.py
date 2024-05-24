@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from accounts.models import CustomUser
 
 
 # Create your models here.
@@ -9,7 +9,7 @@ class Activity(models.Model):
         ("negative", "Negative"),
         ("neutral", "Neutral"),
     ]
-    owner = models.ForeignKey(User, on_detele=models.CASCADE)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
     public = models.BooleanField(default=False)
     description = models.TextField(blank=True, default="")
