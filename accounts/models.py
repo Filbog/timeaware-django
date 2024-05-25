@@ -6,4 +6,4 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
-    goals = models.CharField(max_length=200, blank=True, default="")
+    goal = models.CharField(max_length=200, blank=True, default="")
