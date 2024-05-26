@@ -13,14 +13,14 @@ class CustomUserCreationForm(UserCreationForm):
         fields = (
             "username",
             "email",
-            "goals",
+            "goal",
         )
 
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        if CustomUser.objects.filter(email=email).exists():
-            raise forms.ValidationError("A user with that email already exists.")
-        return email
+    # def clean_email(self):
+    #     email = self.cleaned_data.get("email")
+    #     if CustomUser.objects.filter(email=email).exists():
+    #         raise forms.ValidationError("A user with that email already exists.")
+    #     return email
 
 
 class CustomUserChangeForm(UserChangeForm):
