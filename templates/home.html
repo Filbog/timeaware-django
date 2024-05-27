@@ -4,7 +4,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<p>Hi {{ user.username }}!</p>
+<p>Hi {{ user.username }}! Your goal is {{ user.goal }}</p>
 <p><form action="{% url 'logout' %}" method='post'>
     {% csrf_token %}
     <button name='submit' class='btn btn-outline-secondary btn-sm'>
