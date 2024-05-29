@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import CustomUser
+from django.conf import settings
 
 
 # Create your models here.
@@ -9,7 +9,7 @@ class Activity(models.Model):
         ("negative", "Negative"),
         ("neutral", "Neutral"),
     ]
-    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
     public = models.BooleanField(default=False)
     description = models.TextField(blank=True, default="")
@@ -19,6 +19,9 @@ class Activity(models.Model):
         choices=TYPE_CHOICES,
         default="neutral",
     )
+
+    class Meta:
+        verbose_name_plural = "Activities"
 
     def __str__(self):
         return self.title
@@ -32,4 +35,4 @@ class ActivityInstance(models.Model):
     duration = models.IntegerField()
 
     def __str__(self):
-        return self.activity + " instance"
+        return self.activity.title + " instance"

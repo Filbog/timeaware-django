@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Activities{% endblock title %}
+
+{% block content %}
+{% for activity in activity_list %}
+<div class="card">
+  <div class="card-header">
+    <span class="fw-bold">
+      <a href="#">{{ activity.title }}</a>
+    </span> | Added {{ activity.date_added }}</span>
+</span> | {{ activity.type }}</span>
+  </div>
+  <div class="card-body">
+    {{ activity.description }}
+  </div>
+  <div class="card-footer text-center text-muted">
+    <a href="#">Edit</a> <a href="#">Delete</a>
+  </div>
+</div>
+<br />
+{% endfor %}
+{% endblock content %}
