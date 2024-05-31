@@ -3,6 +3,8 @@
 {% block title %}Activities{% endblock title %}
 
 {% block content %}
+<a href="{% url 'activity_create' %}"><button class="btn">Add Activity</button>
+</a>
 {% for activity in activity_list %}
 <div class="card">
   <div class="card-header">

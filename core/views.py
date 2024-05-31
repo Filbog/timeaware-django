@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
-from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy
 
 from .models import Activity
@@ -34,3 +34,13 @@ class ActivityDeleteView(DeleteView):
     model = Activity
     template_name = "activity_delete.html"
     success_url = reverse_lazy("activity_list")
+
+
+class ActivityCreateView(CreateView):
+    model = Activity
+    template_name = "activity_create.html"
+    fields = ("title", "description", "type")
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
