@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="article-entry">
+  <h2>{{ object.title }}</h2>
+  <p>{{ object.description }}</p>
+</div>
+<div>
+  <p><a href="{% url 'activity_edit' activity.pk %}">Edit</a>
+  </p>
+  <p>Back to <a href="{% url 'activity_list' %}">All Activities</a>.</p>
+</div>
+{% endblock content %}

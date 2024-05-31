@@ -7,7 +7,7 @@
 <div class="card">
   <div class="card-header">
     <span class="fw-bold">
-      <a href="#">{{ activity.title }}</a>
+      {{ activity.title }}
     </span> | Added {{ activity.date_added }}</span>
 </span> | {{ activity.type }}</span>
   </div>
@@ -15,7 +15,11 @@
     {{ activity.description }}
   </div>
   <div class="card-footer text-center text-muted">
-    <a href="#">Edit</a> <a href="#">Delete</a>
+    <a href="#">Track</a>
+    <a href="{{ activity.get_absolute_url }}">Show Statistics</a>
+    <a href="{% url 'activity_edit' activity.pk %}">Edit</a>
+    <a href="{% url 'activity_delete' activity.pk %}">Delete</a>
+
   </div>
 </div>
 <br />

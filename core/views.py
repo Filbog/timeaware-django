@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 
@@ -13,6 +13,11 @@ class HomePageView(TemplateView):
 class ActivityListView(ListView):
     model = Activity
     template_name = "activity_list.html"
+
+
+class ActivityStatisticsView(DetailView):
+    model = Activity
+    template_name = "activity_statistics.html"
 
 
 class ActivityUpdateView(UpdateView):
