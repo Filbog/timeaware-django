@@ -13,7 +13,7 @@ class Activity(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
     public = models.BooleanField(default=False)
-    description = models.TextField(blank=True, default="")
+    description = models.CharField(max_length=300, blank=True, default="")
     date_added = models.DateTimeField(auto_now_add=True)
     type = models.CharField(
         max_length=8,
