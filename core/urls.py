@@ -6,7 +6,7 @@ from .views import (
     ActivityStatisticsView,
     ActivityUpdateView,
     ActivityDeleteView,
-    ActivityCreateView,
+    # ActivityCreateView,
 )
 
 urlpatterns = [
@@ -28,5 +28,5 @@ urlpatterns = [
         ActivityDeleteView.as_view(),
         name="activity_delete",
     ),
-    path("activities/create/", ActivityCreateView.as_view(), name="activity_create"),
+    # path("activities/create/", ActivityCreateView.as_view(), name="activity_create"),
 ]

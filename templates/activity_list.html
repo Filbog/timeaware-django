@@ -1,10 +1,15 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}Activities{% endblock title %}
 
 {% block content %}
-<a href="{% url 'activity_create' %}"><button class="btn">Add Activity</button>
-</a>
+<h1>New activity</h1>
+<form action="" method="post">
+ {% csrf_token %}
+ {{ form|crispy }}
+ <button class="btn btn-success ml-2" type="submit">Save</button>
+</form>
 {% for activity in activity_list %}
 <div class="card">
   <div class="card-header">
@@ -12,6 +17,7 @@
       {{ activity.title }}
     </span> | Added {{ activity.date_added }}</span>
 </span> | {{ activity.type }}</span>
+</span> | {{ activity.owner }}</span>
   </div>
   <div class="card-body">
     {{ activity.description }}
