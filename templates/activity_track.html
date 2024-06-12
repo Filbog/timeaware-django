@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<h1 class="subpage-heading">Tracker</h1>
+<h3 class="mx-auto text-center" >Track {{ activity_title }}</h3>
+<form action="" method="post" class="tracker-form" style="display: none">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn btn-info ml-2" type="submit" id="submitFormButton">Submit</button>
+</form>
+
+
+<div class="d-flex flex-column justify-content-evenly">
+    <h1 class="display-1 mt-3 mx-auto" id='stopwatch'>
+       <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+    </h1>
+     <div class="stopwatch-buttons d-flex mx-auto">
+        <button class='btn btn-secondary' id="start">Start</button>
+        <button class='btn btn-secondary' id="pause" style="display: none;">Pause</button>
+        <button class='btn btn-secondary' id="resume" style="display: none;">Resume</button>
+        <button class='btn btn-secondary' id="finish" style="display: none;">Finish</button>
+     </div>
+
+  </div>
+  <script>
+    let startTime, endTime;
+    let duration = 0;
+    let stopwatchInterval;
+
+    function updateTime() {
+        duration++;
+        let hours = Math.floor(duration / 3600);
+        let minutes = Math.floor(duration / 60);
+        let seconds = duration % 60
+
+        document.getElementById('stopwatch').textContent =
+            String(hours).padStart(2, '0') + ':' +
+            String(minutes).padStart(2, '0') + ':' +
+            String(seconds).padStart(2, '0')
+        console.log(duration)
+    }
+
+    document.getElementById('start').addEventListener('click', function(){
+        startTime = new Date();
+        duration = 0;
+        document.getElementById('id_start_time').value = startTime.toISOString();
+        document.getElementById('start').style.display = 'none';
+        document.getElementById('pause').style.display = 'block';
+        document.getElementById('finish').style.display = 'block';
+        stopwatchInterval = setInterval(updateTime, 1000);
+        console.log('hi')
+
+        })
+
+    document.getElementById('pause').addEventListener('click', function(){
+        clearInterval(stopwatchInterval);
+        document.getElementById('resume').style.display = 'block';
+        document.getElementById('pause').style.display = 'none';
+
+    })
+
+    document.getElementById('resume').addEventListener('click', function(){
+        stopwatchInterval = setInterval(updateTime, 1000);
+        document.getElementById('resume').style.display = 'none';
+        document.getElementById('pause').style.display = 'block';
+
+    })
+
+    document.getElementById('finish').addEventListener('click', function(){
+        clearInterval(stopwatchInterval)
+        endTime = new Date()
+        document.getElementById('id_end_time').value = endTime.toISOString();
+        document.getElementById('id_duration').value = duration;
+        document.getElementById('submitFormButton').click();
+
+    })
+
+
+</script>
+{% endblock content %}

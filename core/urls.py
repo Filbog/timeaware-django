@@ -6,12 +6,12 @@ from .views import (
     ActivityStatisticsView,
     ActivityUpdateView,
     ActivityDeleteView,
-    # ActivityCreateView,
+    ActivityTrackView,
+    test_message,
 )
 
 urlpatterns = [
     path("", HomePageView.as_view(), name="home"),
-    path("", HomePageView.as_view(), name="tracker"),
     path("", HomePageView.as_view(), name="about"),
     #
     path("activities/", ActivityListView.as_view(), name="activity_list"),
@@ -28,5 +28,9 @@ urlpatterns = [
         ActivityDeleteView.as_view(),
         name="activity_delete",
     ),
+    path(
+        "activities/<int:pk>/track/", ActivityTrackView.as_view(), name="activity_track"
+    ),
+    path("test-message/", test_message, name="test_message"),
     # path("activities/create/", ActivityCreateView.as_view(), name="activity_create"),
 ]

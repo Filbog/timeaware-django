@@ -1,10 +1,26 @@
 from django import forms
 
-from .models import Activity
+from .models import Activity, ActivityInstance
 
 
 class ActivityForm(forms.ModelForm):
 
     class Meta:
         model = Activity
-        fields = ["title", "description", "type"]
+        fields = (
+            "title",
+            "type",
+            "description",
+        )
+        labels = {"description": "Description (optional)"}
+
+
+class TrackerForm(forms.ModelForm):
+    class Meta:
+        model = ActivityInstance
+        fields = (
+            "activity",
+            "start_time",
+            "end_time",
+            "duration",
+        )

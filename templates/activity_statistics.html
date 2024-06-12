@@ -1,13 +1,63 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="article-entry">
-  <h2>{{ object.title }}</h2>
-  <p>{{ object.description }}</p>
+
+<div class="container">
+  <h1>Statistics for {{ activity_name }}</h1>
+
+  <h3 class="mt-4 mb-3">Select a period:</h3>
+        <select name="periodInDays" class='form-select mb-3' id='periodInDays'>
+            <option value="1">Last 24 hours </option>
+            <option value="3">Last 3 days </option>
+            <option value="7">Last week </option>
+            <option value="30">Last month </option>
+            <option value="365">Last year</option>
+        </select>
+
+  <canvas id="activityChart" width="400" height="200"></canvas>
 </div>
+
 <div>
-  <p><a href="{% url 'activity_edit' activity.pk %}">Edit</a>
+  <h2>{{labels}}</h2>
+  <h2>{{data}}</h2>
+  <p><a href="{% url 'activity_edit' pk %}">Edit</a>
   </p>
   <p>Back to <a href="{% url 'activity_list' %}">All Activities</a>.</p>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+<script>
+  // console.log(labels);
+  // console.log(data);
+  document.addEventListener('DOMContentLoaded', function() {
+      var labels = {{ labels|safe }};  // Ensure labels are safely embedded
+      var data = {{ data|safe }};
+      console.log(data)
+      console.log(labels)
+      var ctx = document.getElementById('activityChart').getContext('2d');
+      console.log(ctx)
+      const chart = new Chart(ctx, {
+          type: 'bar',  // You can change this to 'bar', 'pie', etc.
+          data: {
+              labels: labels,
+              datasets: [{
+                  label: 'Total Duration (seconds)',
+                  data: data,
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  });
+</script>
 {% endblock content %}
+

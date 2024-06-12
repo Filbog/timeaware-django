@@ -1,29 +1,43 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 {% block title %}Activities{% endblock title %}
 
 {% block content %}
-<h1>New activity</h1>
-<form action="" method="post">
- {% csrf_token %}
- {{ form|crispy }}
- <button class="btn btn-success ml-2" type="submit">Save</button>
-</form>
+<h1 class="subpage-heading">Your activities</h1>
+  <div class="new-activity-section mx-auto mb-4">
+    <div class="text-center"><button class="btn btn-secondary" data-bs-toggle="collapse" href="#new-activity" role="button" aria-expanded="false" aria-controls="new-activity">New activity</button></div>
+  <div class="collapse" id="new-activity">
+    <form action="" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="text-center">
+      <button class="btn btn-success ml-2" type="submit">Save</button>
+    </div>
+    </form>
+  </div>
+</div>
+
+
 {% for activity in activity_list %}
 <div class="card">
   <div class="card-header">
-    <span class="fw-bold">
+    <span class="fw-bold me-2">
       {{ activity.title }}
-    </span> | Added {{ activity.date_added }}</span>
-</span> | {{ activity.type }}</span>
-</span> | {{ activity.owner }}</span>
+    </span>
+    <span>|</span>
+    <span class="mx-2">Added {{ activity.date_added }}</span>
+    <span>|</span>
+    <span class="ms-2 {% if activity.type == 'positive' %}pos{% elif activity.type == 'negative' %}neg{% elif activity.type == 'neutral' %}neu{% endif %}">{{ activity.type }}</span>
   </div>
   <div class="card-body">
     {{ activity.description }}
   </div>
   <div class="card-footer text-center text-muted">
-    <a href="#">Track</a>
+    <a href="{% url 'activity_track' activity.pk %}">Track</a>
     <a href="{{ activity.get_absolute_url }}">Show Statistics</a>
     <a href="{% url 'activity_edit' activity.pk %}">Edit</a>
     <a href="{% url 'activity_delete' activity.pk %}">Delete</a>

@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% block title %} Edit Activity {% endblock title %}
 
 {% block content %}
-<h1>Edit</h1>
+<h1 class="subpage-heading">Edit</h1>
 <form action="" method="post">{% csrf_token %}
   {{ form|crispy }}
   <button class="btn btn-info ml-2" type="submit">Update</button>
 </form>
 
-<button class="btn btn-danger"></button>
+<a href="{% url 'activity_delete' activity.pk %}" class="btn btn-danger mt-2">Delete</a>
 {% endblock content %}

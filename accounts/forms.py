@@ -24,6 +24,9 @@ class CustomUserCreationForm(UserCreationForm):
             "password2",
             "goal",
         )
+        labels = {
+            "goal": "Goal - set a goal to help yourself remember about it end be accountable"
+        }
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
