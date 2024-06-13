@@ -1,1 +1,51 @@
-<h1 class="subpage-heading">About</h1>
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<div class="scroll-btn">
+    <a href='#' id="scrollToTechnologies"><h5 align='right'>Jump to technologies used</h5></a>
+</div>
+<h1 align="center" class='my-3'>About</h1>
+<img src="{% static 'img/hi-res-logo.png' %}" class="img-fluid mt-3 mb-5" alt="Timeaware logo">
+<h4 align='center' class='mb-4'>Empowering Self-Improvement through Mindful Habit Tracking</h3>
+<div class='about mb-5'>
+    <p>The idea of TimeAware has been with me for years, but it was the challenge during CS50's Introduction to Computer Programming that motivated me to bring it to life. The result? A simple and minimalistic app designed to help you track your habits without any fuss. </p>
+
+    <p>We all have our mix of 'good' and 'bad' habits - some we cherish and want to cultivate further, while others we'd rather keep in check. Yet, it's easy to lose track of time when these habits become second nature. I've been there myself, guilty as charged. </p>
+
+    <p>TimeAware was born out of my desire for self-improvement - a tool to effortlessly identify and monitor daily activities, empowering me to nurture the positive and free up space for what truly matters.</p>
+
+    <p>With TimeAware, I've kept things clean and straightforward. No distractions, no complications. Just an app that gives you the power to make mindful choices about your habits.</p>
+
+    <p>Join me on this journey of growth and self-discovery. Let TimeAware be your trusted companion, helping you embrace positive change and make the most of every moment.</p>
+</div>
+
+<div class="technologies-section" id="technologies">
+    <h2 align='center' class='mb-3'>Technologies Used</h2>
+    <p><strong>Back end: </strong>For the back end of the app, I've used Python with Django Framework. I love how robust and structured it is, yet still allowing for flexibility when necessary. For this particular project, I tried to use predominantly class-based views. Learning how to use, extend and customize them was definitely the biggest challenge.</p>
+    <p><strong>Database: </strong>Coming up with the structure of Models, upon which all the logic of the app is based, was a very interesting task. Configuring the app to both work with local SQLite and connecting to the PostgreSQL database in production is always an intimidating task.</p>
+    <p><strong>Front end: </strong>Front end of the app was built mostly with Django templating language. It's incredible what it can achieve inside an HTML file with so little code. I have also used Javascript to cover some front end logic like the Tracker and visualizing Tracking Data with the help of Chart.js library. I've used Bootstrap for the UI and a bit of custom CSS to make the website a bit less 'generic'
+    </p>
+
+</div>
+
+{% endblock content %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const scrollButton = document.getElementById("scrollToTechnologies");
+        const technologiesSection = document.getElementById("technologies");
+
+        scrollButton.addEventListener("click", function() {
+            // Calculate the position of the technologies section relative to the viewport
+            const rect = technologiesSection.getBoundingClientRect();
+
+            // Scroll to the technologies section with a smooth behavior
+            window.scrollTo({
+                top: window.scrollY + rect.top,
+                behavior: "smooth"
+            });
+        });
+    });
+</script>

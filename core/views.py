@@ -3,6 +3,7 @@ from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
+from django.views.generic.base import RedirectView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
@@ -33,8 +34,8 @@ class CustomLoginRequiredMixin(LoginRequiredMixin):
         return super().dispatch(request, *args, **kwargs)
 
 
-class HomePageView(TemplateView):
-    template_name = "home.html"
+class HomeRedirectView(RedirectView):
+    url = reverse_lazy("activity_list")
 
 
 class ActivityGet(ListView):
@@ -145,14 +146,16 @@ class ActivityStatisticsView(TemplateView):
         )
 
         # prepare data for Chart.js
-        labels = [
-            entry["start_time__date"].strftime("%Y-%m-%d") for entry in activity_data
-        ]
+        labels = [entry["start_time__date"].isoformat() for entry in activity_data]
+        #         labels = [
+        #     entry["start_time__date"].strftime("%Y-%m-%d") for entry in activity_data
+        # ]
         data = [entry["total_duration"] for entry in activity_data]
         context["labels"] = labels
         print(type(labels[0]))
         context["data"] = data
         context["activity_name"] = Activity.objects.get(pk=activity_id).title
+        context["activity_type"] = Activity.objects.get(pk=activity_id).type
         print(context)
         return context
 

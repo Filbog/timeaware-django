@@ -7,7 +7,7 @@
 
   <h3 class="mt-4 mb-3">Select a period:</h3>
         <select name="periodInDays" class='form-select mb-3' id='periodInDays'>
-            <option value="1">Last 24 hours </option>
+            <option value="1">Today </option>
             <option value="3">Last 3 days </option>
             <option value="7">Last week </option>
             <option value="30">Last month </option>
@@ -17,13 +17,14 @@
   <canvas id="activityChart" width="400" height="200"></canvas>
 </div>
 
-<div>
-  <h2>{{labels}}</h2>
-  <h2>{{data}}</h2>
-  <p><a href="{% url 'activity_edit' pk %}">Edit</a>
-  </p>
-  <p>Back to <a href="{% url 'activity_list' %}">All Activities</a>.</p>
-</div>
+
+  <!-- <h2>{{labels}}</h2>
+  <h2>{{data}}</h2> -->
+  <div class="buttons d-flex gap-2 justify-content-center mt-3">
+    <a href="{% url 'activity_edit' pk %}"><button class="btn btn-secondary">Edit Activity</button></a>
+
+  <a href="{% url 'activity_list' %}"><button class="btn btn-secondary">All Activities</button></a>
+  </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 
@@ -33,30 +34,77 @@
   document.addEventListener('DOMContentLoaded', function() {
       var labels = {{ labels|safe }};  // Ensure labels are safely embedded
       var data = {{ data|safe }};
-      console.log(data)
+      const type = '{{ activity_type|safe }}'
+      const typeColors = {
+        'neutral': '186, 118, 254',
+        'positive': '29, 181, 146',
+        'negative': '255, 99, 132',
+      }
+      console.log(type)
       console.log(labels)
-      var ctx = document.getElementById('activityChart').getContext('2d');
-      console.log(ctx)
-      const chart = new Chart(ctx, {
-          type: 'bar',  // You can change this to 'bar', 'pie', etc.
-          data: {
-              labels: labels,
-              datasets: [{
-                  label: 'Total Duration (seconds)',
-                  data: data,
-                  borderColor: 'rgba(75, 192, 192, 1)',
-                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  y: {
-                      beginAtZero: true
-                  }
-              }
-          }
+      labelsAsDates = labels.map(function(label) {
+        return new Date(label);
       });
+
+      function filterLabels(days) {
+        const now = new Date()
+        const filteredLabels = []
+        // const filterLabels = []
+        for (let i = 0; i < labels.length; i++){
+          if ((now - labelsAsDates[i])/(1000 * 60 * 60 * 24) <= days) {
+            filteredLabels.push(labels[i]);
+          }
+        }
+        console.log(filteredLabels)
+        return filteredLabels
+      }
+
+
+
+      let periodInDays = document.getElementById('periodInDays');
+      periodInDays.addEventListener('change', function(){
+        const filteredLabels = filterLabels(periodInDays.value);
+        newChart(filteredLabels, data, type)
+      });
+
+      let initialLabels = filterLabels(1);
+
+      let chart = null;
+      newChart(initialLabels, data, type);
+
+
+
+      function newChart(labels, data, type){
+        if(chart){
+          chart.destroy();
+        }
+
+
+        var ctx = document.getElementById('activityChart').getContext('2d');
+        console.log(ctx);
+        console.log(labels)
+        console.log(data);
+        chart = new Chart(ctx, {
+            type: 'bar',  // You can change this to 'bar', 'pie', etc.
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Duration (seconds)',
+                    data: data,
+                    borderColor: `rgb(${typeColors[type]})`,
+                    backgroundColor: `rgba(${typeColors[type]}, 0.4)`,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+      };
   });
 </script>
 {% endblock content %}

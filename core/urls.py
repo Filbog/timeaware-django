@@ -1,7 +1,8 @@
 from django.urls import path
+from django.views.generic import TemplateView
 
 from .views import (
-    HomePageView,
+    HomeRedirectView,
     ActivityListView,
     ActivityStatisticsView,
     ActivityUpdateView,
@@ -11,8 +12,8 @@ from .views import (
 )
 
 urlpatterns = [
-    path("", HomePageView.as_view(), name="home"),
-    path("", HomePageView.as_view(), name="about"),
+    path("", HomeRedirectView.as_view(), name="home-redirect"),
+    path("about/", TemplateView.as_view(template_name="about.html"), name="about"),
     #
     path("activities/", ActivityListView.as_view(), name="activity_list"),
     path(
