@@ -12,7 +12,9 @@ class ActivityForm(forms.ModelForm):
             "type",
             "description",
         )
-        labels = {"description": "Description (optional)"}
+        labels = {
+            "description": "Description (optional) - e.g. state why you want to track this activity"
+        }
 
 
 class TrackerForm(forms.ModelForm):

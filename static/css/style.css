@@ -43,9 +43,12 @@ main{
 
 /* NAVBAR */
 
-nav{
-    height: 50px;
+@media(min-width: 992px){
+    nav{
+        height: 50px;
+    }
 }
+
 
 .navbar .nav-link, .navbar button{
     border-radius: 5px;

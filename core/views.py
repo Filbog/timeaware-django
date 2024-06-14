@@ -152,7 +152,6 @@ class ActivityStatisticsView(TemplateView):
         # ]
         data = [entry["total_duration"] for entry in activity_data]
         context["labels"] = labels
-        print(type(labels[0]))
         context["data"] = data
         context["activity_name"] = Activity.objects.get(pk=activity_id).title
         context["activity_type"] = Activity.objects.get(pk=activity_id).type
