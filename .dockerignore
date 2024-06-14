@@ -1,3 +1,5 @@
 .ta_venv/
 *.sqlite3
 __pycache__/
+.git
+.env
