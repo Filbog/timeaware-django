@@ -41,10 +41,10 @@ TimeAware - as the name suggests - helps users be more aware on what they spend 
 - Classic CRUD implementation with creating and managing activities
 - Registration and user management: Django's built-in authentication system with custom registration view and form, enriched with sending email confirmation link for creating the user account as well as password recovery
 ### Front End
-- Django's templates in conjunction with plain Javascript were all I needed to achieve my desired result.
+- Django's templates in conjunction with plain Javascript were all I needed to achieve my desired result and functionality
 - For styling, I've used Bootstrap 5
-- Django Crispy Forms was used to render forms in the app.
-- I've used Chart.js for data visualisation part.
+- Django Crispy Forms was used to render forms in the app
+- I've used Chart.js for data visualisation part
 ### Deployment
 - The app is fully up-and-running on https://timeaware.fly.dev/ 
 - FlyIO was the platform of choice for deploying my app. This PaaS is pretty reliable and relatively inexpensive.
@@ -62,8 +62,8 @@ TimeAware - as the name suggests - helps users be more aware on what they spend 
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/yourusername/your-repo.git
-cd your-repo
+git clone https://github.com/Filbog/timeaware-django.git
+cd timeaware-django
 ```
 ### Create and Activate a Virtual Environment
 ```sh
@@ -81,9 +81,8 @@ SECRET_KEY=your-secret-key
 DEBUG=True
 ```
 You can generate your 'SECRET_KEY' using:
-```python
-from django.core.management.utils import get_random_secret_key
-print(get_random_secret_key())
+```sh
+python -c "import secrets; print(secrets.token_urlsafe())"
 ```
 ### Apply Migrations and Collect Static Files
 ```sh
@@ -98,9 +97,10 @@ Open your browser and navigate to http://127.0.0.1:8000 to see the application i
 
 ## Roadmap
 Features I'd love to implement in the future:
-- commenting other users' public topics and entries
-- adding files like images, videos to the topic entries
-- hashtag system to filter specific areas in which the users are interested in
+- Adding a "search" functionality
+- Filtering displayed activities by their "positive/negative/netural" badges
+- Adding activities to "Favorites"
+- PWA, Offline functionality
 
 ## Contact
 Message me via email: f.boguslawski101@gmail.com
