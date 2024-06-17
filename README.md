@@ -30,7 +30,7 @@ TimeAware - as the name suggests - helps users be more aware on what they spend 
 
 - Sign up with email to have full access to the app's functionality
 - Create and manage activities (CRUD) and categorize them by type (positive/negative/neutral)
-- Track the activities with a tracker built with Javascript
+- Track the activities with a tracker built in Javascript
 - Tracking data visualisation with Chart.js
 
 ## Technical Details
