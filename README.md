@@ -24,7 +24,7 @@ TimeAware is a productivity app that lets you effortlessly and precisely track y
 
 ## Project Description
 
-TimeAware - as the name suggests - helps users be more aware on what they spend their time on. It enables users add activities, measure time spent on them and later display that data as charts. The project has all the typical CRUD functionality for custom-built models via Django ORM. The whole app - idea, design, architectural, code - is built from scratch.
+TimeAware - as the name suggests - helps users be more aware on what they spend their time on. It enables users add activities, measure time spent on them and later display that data as charts. The project has all the typical CRUD functionality for custom-built models via Django ORM. The whole app - idea, design, architecture, code - is built from scratch.
 
 ## Features
 
