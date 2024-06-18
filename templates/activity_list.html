@@ -6,8 +6,12 @@
 
 {% block content %}
 <h1 class="subpage-heading">Your activities</h1>
+<div class="d-flex" id="search-container">
+  <input class="form-control me-2" type="search" placeholder="Search activity..." aria-label="Search"
+      id="search-input">
+</div>
   <div class="new-activity-section mx-auto mb-4">
-    <div class="text-center"><button class="btn btn-secondary" data-bs-toggle="collapse" href="#new-activity" role="button" aria-expanded="false" aria-controls="new-activity">New activity</button></div>
+    <div class="text-center"><button class="btn btn-secondary" data-bs-toggle="collapse" href="#new-activity" role="button" aria-expanded="false" aria-controls="new-activity">+ New activity</button></div>
   <div class="collapse" id="new-activity">
     <form action="" method="post">
     {% csrf_token %}
@@ -19,26 +23,54 @@
   </div>
 </div>
 
+<div class="activities-container">
+  {% for activity in activity_list %}
+  <div class="card activity-card my-4">
+    <div class="card-header d-flex align-items-center justify-content-center">
 
-{% for activity in activity_list %}
-<div class="card">
-  <div class="card-header d-flex align-items-center justify-content-center">
+        <p class="activity-title">{{ activity.title }} </p>
 
-      <p class="activity-title">{{ activity.title }} </p>
+      <span class="ms-2 {% if activity.type == 'positive' %}pos{% elif activity.type == 'negative' %}neg{% elif activity.type == 'neutral' %}neu{% endif %}">{{ activity.type }}</span>
+    </div>
+    <div class="card-body">
+      {{ activity.description }}
+    </div>
+    <div class="card-footer text-center text-muted d-flex flex-column flex-md-row gap-2 justify-content-center">
+      <a href="{% url 'activity_track' activity.pk %}"><button class="btn btn-secondary w-100 w-md-auto">Track</button></a>
+      <a href="{{ activity.get_absolute_url }}"><button class="btn btn-secondary w-100 w-md-auto">Statistics</button></a>
+      <a href="{% url 'activity_edit' activity.pk %}"><button class="btn btn-secondary w-100 w-md-auto">Edit</button></a>
+      <a href="{% url 'activity_delete' activity.pk %}"><button class="btn btn-secondary w-100 w-md-auto">Delete</button></a>
 
-    <span class="ms-2 {% if activity.type == 'positive' %}pos{% elif activity.type == 'negative' %}neg{% elif activity.type == 'neutral' %}neu{% endif %}">{{ activity.type }}</span>
+    </div>
   </div>
-  <div class="card-body">
-    {{ activity.description }}
-  </div>
-  <div class="card-footer text-center text-muted d-flex flex-column flex-md-row gap-2 justify-content-center">
-    <a href="{% url 'activity_track' activity.pk %}"><button class="btn btn-secondary w-100 w-md-auto">Track</button></a>
-    <a href="{{ activity.get_absolute_url }}"><button class="btn btn-secondary w-100 w-md-auto">Statistics</button></a>
-    <a href="{% url 'activity_edit' activity.pk %}"><button class="btn btn-secondary w-100 w-md-auto">Edit</button></a>
-    <a href="{% url 'activity_delete' activity.pk %}"><button class="btn btn-secondary w-100 w-md-auto">Delete</button></a>
-
-  </div>
+  {% endfor %}
 </div>
-<br />
-{% endfor %}
+
+
+
+<script>
+  //search functionality
+  document.addEventListener('DOMContentLoaded', (event) => {
+    console.log('hi')
+    const searchInput = document.getElementById('search-input');
+    const activityCards = document.querySelectorAll('.activity-card');
+
+    searchInput.addEventListener('input', function(){
+      console.log('hi')
+      const searchQuery = this.value.toLowerCase();
+
+      activityCards.forEach(card => {
+        const title = card.querySelector('.activity-title').textContent.toLowerCase();
+
+        if (title.includes(searchQuery)){
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      })
+    })
+  })
+
+</script>
 {% endblock content %}
+
