@@ -83,7 +83,7 @@ main{
 
 /* For the neg/pos/neutral types */
 
-.new-activity-section .asteriskField{
+.new-activity-section .asteriskField, .login-form .asteriskField{
     display: none;
 }
 
@@ -126,7 +126,7 @@ main{
  }
 
  @media(min-width: 576px){
-    .card{
+    .card, #search-container, #new-activity{
         width: 75%;
     }
  }
@@ -156,8 +156,8 @@ main{
 }
 
 .alert-custom-fade-in {
-    opacity: 0; /* Start with 0 opacity */
-    animation: fadeIn 0.5s forwards; /* Fade in animation */
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
 }
 
  .alert{
@@ -168,6 +168,7 @@ main{
     transform: translateX(-50%);
  }
 
+ /* Stopwatch  */
  .stopwatch-buttons{
     gap: 1rem;
 

@@ -5,7 +5,7 @@
 
 {% block content %}
 <h1 class="subpage-heading">Log In</h1>
-<form method="post">{% csrf_token %}
+<form method="post" class="login-form">{% csrf_token %}
     {{ form|crispy }}
     <button class="btn btn-success" type="submit">Log In</button>
 </form>
@@ -16,4 +16,5 @@
     <h3 class='lead'>Take control of your time. Eliminate bad habits and cultivate good ones. Start today!</h3>
     <a href="{% url 'signup' %}" class="btn btn-secondary px-4 my-3 custom-secondary-btn">Create Account</a>
 </div>
+
 {% endblock content %}
