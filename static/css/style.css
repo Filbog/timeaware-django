@@ -1,7 +1,7 @@
 :root {
-    --pos: #9ffaca;
-    --neu: rgb(186, 118, 254);
-    --neg: #fcc9c9;
+    --positive: #9ffaca;
+    --neutral: rgb(186, 118, 254);
+    --negative: #fcc9c9;
     /* from TA alpha */
     --secondary-color: #8353ece4;
     --secondary-color-hover: rgb(145, 57, 222);
@@ -87,22 +87,22 @@ main{
     display: none;
 }
 
-.pos, .neg, .neu{
+.positive, .negative, .neutral{
     padding: 4px;
     border-radius: 5px;
 }
 
-.pos{
-    background-color: var(--pos);
+.positive{
+    background-color: var(--positive);
 }
 
-.neg{
-    background-color: var(--neg);
+.negative{
+    background-color: var(--negative);
 
 }
 
-.neu{
-    background-color: var(--neu);
+.neutral{
+    background-color: var(--neutral);
 }
 
 /* Headings */
@@ -118,15 +118,22 @@ main{
     }
  }
 
+ /* activity list */
+ /* .type-filter{
+    display: none;
+} */
+
  /* Card elements background */
+ .activity-list-container{
+    margin: 0 auto;
+ }
+
  .card{
     background: var(--card-bg);
-    margin: 0 auto;
-
  }
 
  @media(min-width: 576px){
-    .card, #search-container, #new-activity{
+    .activity-list-container{
         width: 75%;
     }
  }
@@ -184,4 +191,31 @@ main{
 
 .stopwatch-container{
     background-color: rgba(252, 252, 252, 0.411);
+}
+
+/* favorite button with google icons */
+.favorite-btn {
+    border: none;
+    outline: none;
+  }
+
+.material-symbols-outlined {
+    color: var(--secondary-color);
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+  }
+
+.material-symbols-outlined:hover{
+    color: var(--secondary-color-hover);
+}
+
+.material-symbols-outlined.favorite {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
 }

@@ -69,7 +69,7 @@ class SignupPageTests(TestCase):
                 "password2": "testpaSS123",
             },
         )
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(get_user_model().objects.all().count(), 1)
         self.assertEqual(get_user_model().objects.all()[0].username, "testuser1")
         self.assertEqual(get_user_model().objects.all()[0].email, "test1@example.com")

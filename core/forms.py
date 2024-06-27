@@ -17,12 +17,12 @@ class ActivityForm(forms.ModelForm):
         }
 
 
-class TrackerForm(forms.ModelForm):
-    class Meta:
-        model = ActivityInstance
-        fields = (
-            "activity",
-            "start_time",
-            "end_time",
-            "duration",
-        )
+# class TrackerForm(forms.ModelForm):
+#     class Meta:
+#         model = ActivityInstance
+#         fields = (
+#             "activity",
+#             "start_time",
+#             "end_time",
+#             "duration",
+#         )

@@ -8,6 +8,7 @@ from .views import (
     ActivityUpdateView,
     ActivityDeleteView,
     ActivityTrackView,
+    ActivityToggleFavoriteView,
     test_message,
 )
 
@@ -17,7 +18,7 @@ urlpatterns = [
     #
     path("activities/", ActivityListView.as_view(), name="activity_list"),
     path(
-        "activities/<int:pk>",
+        "activities/<int:pk>/",
         ActivityStatisticsView.as_view(),
         name="activity_statistics",
     ),
@@ -31,6 +32,11 @@ urlpatterns = [
     ),
     path(
         "activities/<int:pk>/track/", ActivityTrackView.as_view(), name="activity_track"
+    ),
+    path(
+        "activities/<int:pk>/favorite/",
+        ActivityToggleFavoriteView.as_view(),
+        name="activity_favorite_toggle",
     ),
     path("test-message/", test_message, name="test_message"),
     # path("activities/create/", ActivityCreateView.as_view(), name="activity_create"),

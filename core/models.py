@@ -12,7 +12,7 @@ class Activity(models.Model):
     ]
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
-    public = models.BooleanField(default=False)
+    favorite = models.BooleanField(default=False)
     description = models.CharField(max_length=300, blank=True, default="")
     date_added = models.DateTimeField(auto_now_add=True)
     type = models.CharField(
@@ -36,7 +36,7 @@ class ActivityInstance(models.Model):
     # might need to change start_time and date_time logic, we'll see
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    duration = models.IntegerField()
+    duration = models.PositiveIntegerField()
 
     def __str__(self):
         return self.activity.title + " instance"

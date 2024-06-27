@@ -7,6 +7,7 @@ from django.views.generic.base import RedirectView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 from django.db.models import Sum
 
 
@@ -16,7 +17,7 @@ from django.contrib import messages
 
 
 from .models import Activity, ActivityInstance
-from .forms import ActivityForm, TrackerForm
+from .forms import ActivityForm
 
 
 class AuthMixin(UserPassesTestMixin):
@@ -83,6 +84,16 @@ class ActivityListView(CustomLoginRequiredMixin, View):
         return view(request, *args, **kwargs)
 
 
+class ActivityToggleFavoriteView(View):
+    def post(self, request, *args, **kwargs):
+        activity_id = kwargs.get("pk")
+        activity = get_object_or_404(Activity, id=activity_id, owner=request.user)
+        activity.favorite = not activity.favorite
+        activity.save()
+        return JsonResponse({"success": True, "favorite": activity.favorite})
+        # return redirect("activity_list")
+
+
 class ActivityStatisticsView(LoginRequiredMixin, AuthMixin, DetailView):
     model = Activity
     template_name = "activity_statistics.html"
@@ -96,6 +107,7 @@ class ActivityUpdateView(
         "title",
         "description",
         "type",
+        "favorite",
     )
     template_name = "activity_edit.html"
     success_url = reverse_lazy("activity_list")
@@ -111,11 +123,15 @@ class ActivityDeleteView(
     success_message = "Activity deleted!"
 
 
-class ActivityTrackView(CustomLoginRequiredMixin, CreateView):
+class ActivityTrackView(CustomLoginRequiredMixin, AuthMixin, CreateView):
     model = ActivityInstance
     fields = ["start_time", "end_time", "duration"]
     template_name = "activity_track.html"
     success_url = reverse_lazy("activity_list")
+
+    # For AuthMixin
+    def get_object(self):
+        return get_object_or_404(Activity, pk=self.kwargs["pk"])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -129,8 +145,12 @@ class ActivityTrackView(CustomLoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ActivityStatisticsView(TemplateView):
+class ActivityStatisticsView(LoginRequiredMixin, AuthMixin, TemplateView):
     template_name = "activity_statistics.html"
+
+    # For the AuthMixin
+    def get_object(self):
+        return get_object_or_404(Activity, pk=self.kwargs["pk"])
 
     def get_context_data(self, **kwargs):
         # get the 'original' data
@@ -147,9 +167,6 @@ class ActivityStatisticsView(TemplateView):
 
         # prepare data for Chart.js
         labels = [entry["start_time__date"].isoformat() for entry in activity_data]
-        #         labels = [
-        #     entry["start_time__date"].strftime("%Y-%m-%d") for entry in activity_data
-        # ]
         data = [entry["total_duration"] for entry in activity_data]
         context["labels"] = labels
         context["data"] = data

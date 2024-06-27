@@ -7,7 +7,6 @@ class ActivityAdmin(admin.ModelAdmin):
         "title",
         "owner",
         "type",
-        "public",
     ]
 
 
