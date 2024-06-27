@@ -28,6 +28,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
+
 ALLOWED_HOSTS = ["timeaware.fly.dev", "localhost", "127.0.0.1"]
 CSRF_TRUSTED_ORIGINS = ["https://timeaware.fly.dev"]
 
@@ -67,7 +68,7 @@ ROOT_URLCONF = "ta_project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [BASE_DIR / "templates", BASE_DIR / "templates/errors"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
