@@ -8,6 +8,8 @@ ENV PYTHONUNBUFFERED 1
 # I must have this here for the env variables to be read and accessed at build
 ENV EMAIL_HOST_USER=${EMAIL_HOST_USER}
 ENV EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+ENV SECRET_KEY=${SECRET_KEY}
+
 
 # install psycopg2 dependencies.
 RUN apt-get update && apt-get install -y \
